@@ -1,6 +1,7 @@
 package com.gabriel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -25,15 +26,17 @@ public class Platformer {
 
 	public Platformer() {
 		frame = new JFrame();
-		gp = new GamePanel();
+		gp = new GamePanel(frame);
 	}
 
 	public void run() {
 		frame.add(gp);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(WIDTH, HEIGHT);
-		frame.setVisible(true);
 		frame.addKeyListener(gp);
-
+		
+		gp.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		frame.pack();
+		
+		frame.setVisible(true);
 	}
 }

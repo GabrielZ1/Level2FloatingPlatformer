@@ -26,21 +26,19 @@ public class ObjectManager implements ActionListener{
 
 	public void update() {
 
+		//add collision check for player here probably + purge objects? + update player position?
+
 	}
 
 	public void draw(Graphics g) {
 		player.draw(g);
 
 		for(int i = 0; i<platforms.size(); i++) {
-
 			platforms.get(i).draw(g);
-
 		}
 
 		for(int i = 0; i<spikes.size(); i++) {
-
 			spikes.get(i).draw(g);
-
 		}
 
 	}
@@ -67,12 +65,12 @@ public class ObjectManager implements ActionListener{
 
 	}
 
-	
+
 	public void checkCollision() {
 
 	}
-	
-	
+
+
 	public int getCurrentLevel() {
 		return currentLevel;
 	}

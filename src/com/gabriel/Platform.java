@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
+
 public class Platform extends GameObject{
 	
 	public static BufferedImage image;
@@ -28,7 +30,17 @@ public class Platform extends GameObject{
 		}
 	}
 	
-	
+	void loadImage(String imageFile) {
+		if (needImage) {
+			try {
+				image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+				gotImage = true;
+			} catch (Exception e) {
+
+			}
+			needImage = false;
+		}
+	}
 
 
 }

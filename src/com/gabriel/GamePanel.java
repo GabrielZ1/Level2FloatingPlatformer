@@ -1,6 +1,7 @@
 package com.gabriel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -28,20 +31,24 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	Timer frameDraw;
 
-	Player player = new Player(50, 400, 50, 50);
+	Player player = new Player(50, 525, 25, 25);
 
 	ObjectManager objectManager = new ObjectManager(player);
+
+	JFrame frame;
 
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
 
-	public GamePanel() {
+	public GamePanel(JFrame frame) {
 		titleFont = new Font ("Arial", Font.PLAIN, 48);
 		subTextFont = new Font ("Arial", Font.PLAIN, 20);
 
 		frameDraw = new Timer(1000/60, this);
 		frameDraw.start();
+
+		this.frame = frame;
 
 		if (needImage) {
 			loadImage ("background.png");
@@ -58,23 +65,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			drawMenuState(g);
 
 		}
-		else if (currentState == LEVELONE) {
-			Platformer.WIDTH = 1000;
-			Platformer.HEIGHT = 600;
-
-			drawGameState(g);
-
-		}
-		else if (currentState == LEVELTWO) {
-			Platformer.WIDTH = 600;
-			Platformer.HEIGHT = 1000;
-
-			drawGameState(g);
-
-		}
-		else if (currentState == LEVELTHREE) {
-			Platformer.WIDTH = 800;
-			Platformer.HEIGHT = 800;
+		else if (currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
 
 			drawGameState(g);
 
@@ -82,6 +73,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		else if (currentState == END) {
 			Platformer.WIDTH = 600;
 			Platformer.HEIGHT = 600;
+
+			setPreferredSize(new Dimension(Platformer.WIDTH, Platformer.HEIGHT));
+			frame.pack();
 
 			drawEndState(g);
 
@@ -95,7 +89,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	void updateGameState() {
 		objectManager.update();
 		if(player.isActive == false) {
-			//put what happens here when i die (fall into void or get hit by a spike probably)
+			//put what happens here when u die (fall into void or get hit by a spike probably)
 		}
 
 	}
@@ -108,7 +102,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		g.fillRect(0, 0, Platformer.WIDTH, Platformer.HEIGHT);
 
 		g.setFont(titleFont);
-		g.setColor(Color.YELLOW);
+		g.setColor(Color.BLACK);
 		g.drawString("_ _ (name) _ _ Platformer", 25, 150);
 
 		g.setFont(subTextFont);
@@ -119,10 +113,21 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	void drawGameState(Graphics g) {
 
 		if (gotImage) {
-			g.drawImage(image, 0, 0, null);
+			g.drawImage(image, 0, 0, Platformer.WIDTH, Platformer.HEIGHT, null);
+
 		} else {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, Platformer.WIDTH, Platformer.HEIGHT);
+		}
+
+		if(currentState == LEVELONE) {
+			addLevelOneObjects();
+		}
+		else if(currentState == LEVELTWO) {
+			addLevelTwoObjects();
+		}
+		else if(currentState == LEVELTHREE) {
+			addLevelThreeObjects();
 		}
 
 		objectManager.draw(g);
@@ -168,12 +173,49 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		//add things here
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if (currentState == END) {
+				currentState = MENU;
+				player = new Player(50, 525, 25, 25);
+				objectManager = new ObjectManager(player);
+				player.setObjectManager(objectManager);
+			}
+			else if (currentState == MENU){
+				currentState = LEVELONE;
+
+				//NOTE: when changing to the level 2 (beat level 1), use these 4 lines below but set width to 600 and height to 1000 (for lvl 3 same but 800 800)
+				//ALSO make sure to call objectManager.purgeObjects(); WHEN SWITCHING TO A NEW LEVEL!
+				Platformer.WIDTH = 1000;
+				Platformer.HEIGHT = 600;
+				setPreferredSize(new Dimension(Platformer.WIDTH, Platformer.HEIGHT));
+				frame.pack();
+
+			}
+
+		}
+
+		if(currentState == MENU) {
+			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+				JOptionPane.showMessageDialog (null, "Use the arrow keys to move. Reach the green finish lined while avoiding falling into the void or the spikes to beat the level.");
+			}
+		}
+
+		if(currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
+			//movement commands go here
+
+
+		}
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		//add things here
+		if(currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
+			//more movement commands go here
+
+
+		}
 	}
 
 	@Override
@@ -181,6 +223,18 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		// TODO Auto-generated method stub
 
 	}
+
+	void addLevelOneObjects() {
+		objectManager.platforms.add();
+		objectManager.spikes.add();
+	}
+	void addLevelTwoObjects() {
+
+	}
+	void addLevelThreeObjects() {
+
+	}
+
 
 	void loadImage(String imageFile) {
 		if (needImage) {
@@ -192,9 +246,5 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			}
 			needImage = false;
 		}
-	}
-
-	public void startGame() {
-
 	}
 }
