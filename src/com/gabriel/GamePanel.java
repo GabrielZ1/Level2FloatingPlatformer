@@ -59,8 +59,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	public void paintComponent(Graphics g) {
 		if (currentState == MENU) {
-			Platformer.WIDTH = 600;
-			Platformer.HEIGHT = 600;
+			FloatingPlatformer.WIDTH = 600;
+			FloatingPlatformer.HEIGHT = 600;
 
 			drawMenuState(g);
 
@@ -71,10 +71,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		}
 		else if (currentState == END) {
-			Platformer.WIDTH = 600;
-			Platformer.HEIGHT = 600;
+			FloatingPlatformer.WIDTH = 600;
+			FloatingPlatformer.HEIGHT = 600;
 
-			setPreferredSize(new Dimension(Platformer.WIDTH, Platformer.HEIGHT));
+			setPreferredSize(new Dimension(FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT));
 			frame.pack();
 
 			drawEndState(g);
@@ -99,25 +99,25 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	void drawMenuState(Graphics g) {	
 		g.setColor(Color.CYAN);
-		g.fillRect(0, 0, Platformer.WIDTH, Platformer.HEIGHT);
+		g.fillRect(0, 0, FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT);
 
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
-		g.drawString("_ _ (name) _ _ Platformer", 25, 150);
+		g.drawString("Floating Platformer", 100, 150);
 
 		g.setFont(subTextFont);
-		g.drawString("Press ENTER to start", 150, 350);
-		g.drawString("Press SPACE for instructions", 115, 500);
-
+		g.drawString("Press ENTER to start", 190, 350);
+		g.drawString("Press SPACE for instructions", 160, 500);
+		
 	}
 	void drawGameState(Graphics g) {
 
 		if (gotImage) {
-			g.drawImage(image, 0, 0, Platformer.WIDTH, Platformer.HEIGHT, null);
+			g.drawImage(image, 0, 0, FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT, null);
 
 		} else {
 			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, Platformer.WIDTH, Platformer.HEIGHT);
+			g.fillRect(0, 0, FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT);
 		}
 
 		if(currentState == LEVELONE) {
@@ -135,7 +135,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 	void drawEndState(Graphics g) {
 		g.setColor(Color.GREEN);	
-		g.fillRect(0, 0, Platformer.WIDTH, Platformer.HEIGHT);
+		g.fillRect(0, 0, FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT);
 
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
@@ -185,9 +185,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 				//NOTE: when changing to the level 2 (beat level 1), use these 4 lines below but set width to 600 and height to 1000 (for lvl 3 same but 800 800)
 				//ALSO make sure to call objectManager.purgeObjects(); WHEN SWITCHING TO A NEW LEVEL!
-				Platformer.WIDTH = 1000;
-				Platformer.HEIGHT = 600;
-				setPreferredSize(new Dimension(Platformer.WIDTH, Platformer.HEIGHT));
+				FloatingPlatformer.WIDTH = 1000;
+				FloatingPlatformer.HEIGHT = 600;
+				setPreferredSize(new Dimension(FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT));
 				frame.pack();
 
 			}
@@ -225,8 +225,19 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 
 	void addLevelOneObjects() {
-		objectManager.platforms.add();
-		objectManager.spikes.add();
+		objectManager.addPlatform(new Platform(0,550,150,50));
+		objectManager.addPlatform(new Platform(250,550,150,50));
+		objectManager.addPlatform(new Platform(500,550,300,50));
+		objectManager.addSpike(new Spike(525,480,200,80));
+		
+		objectManager.addPlatform(new Platform(875,475,100,50));
+
+		objectManager.addPlatform(new Platform(700,400,100,50));
+		objectManager.addPlatform(new Platform(500,400,100,50));
+		objectManager.addPlatform(new Platform(0,400,400,50));
+		//objectManager.addSpike(new Spike(525,480,200,80));
+		//objectManager.addSpike(new Spike(525,480,200,80));
+		
 	}
 	void addLevelTwoObjects() {
 

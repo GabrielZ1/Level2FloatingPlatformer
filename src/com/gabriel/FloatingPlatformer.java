@@ -14,17 +14,17 @@ import java.util.Timer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Platformer {
+public class FloatingPlatformer {
 	JFrame frame;
 	GamePanel gp;
 	public static int WIDTH = 600;
 	public static int HEIGHT = 600;
 
 	public static void main(String[] args) {
-		new Platformer().run();
+		new FloatingPlatformer().run();
 	}
 
-	public Platformer() {
+	public FloatingPlatformer() {
 		frame = new JFrame();
 		gp = new GamePanel(frame);
 	}
