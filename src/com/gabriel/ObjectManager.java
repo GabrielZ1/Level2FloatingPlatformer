@@ -9,6 +9,8 @@ public class ObjectManager implements ActionListener{
 	Player player;
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
 	ArrayList<Spike> spikes = new ArrayList<Spike>();
+	ArrayList<FinishLine> finishLines = new ArrayList<FinishLine>();
+	
 
 	int currentLevel = 1;
 
@@ -22,6 +24,10 @@ public class ObjectManager implements ActionListener{
 
 	public void addSpike(Spike spike) {
 		spikes.add(spike);
+	}
+	
+	public void addFinishLine(FinishLine finishLine) {
+		finishLines.add(finishLine);
 	}
 
 	public void update() {
@@ -41,6 +47,9 @@ public class ObjectManager implements ActionListener{
 			spikes.get(i).draw(g);
 		}
 
+		for(int i = 0; i<finishLines.size(); i++) {
+			finishLines.get(i).draw(g);
+		}
 	}
 
 	public void purgeObjects() {
@@ -54,6 +63,12 @@ public class ObjectManager implements ActionListener{
 		for(int i = 0; i<spikes.size(); i++) {
 			if(spikes.get(i).isActive == false) {
 				spikes.remove(i);	
+			}	
+		}
+		
+		for(int i = 0; i<finishLines.size(); i++) {
+			if(finishLines.get(i).isActive == false) {
+				finishLines.remove(i);	
 			}	
 		}
 

@@ -108,7 +108,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		g.setFont(subTextFont);
 		g.drawString("Press ENTER to start", 190, 350);
 		g.drawString("Press SPACE for instructions", 160, 500);
-		
+
 	}
 	void drawGameState(Graphics g) {
 
@@ -172,7 +172,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		//add things here
+
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END) {
 				currentState = MENU;
@@ -184,7 +184,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 				currentState = LEVELONE;
 
 				//NOTE: when changing to the level 2 (beat level 1), use these 4 lines below but set width to 600 and height to 1000 (for lvl 3 same but 800 800)
-				//ALSO make sure to call objectManager.purgeObjects(); WHEN SWITCHING TO A NEW LEVEL!
+				//ALSO make sure to call objectManager.purgeObjects(); & i think i have to deactivate all objects? WHEN SWITCHING TO A NEW LEVEL!
 				FloatingPlatformer.WIDTH = 1000;
 				FloatingPlatformer.HEIGHT = 600;
 				setPreferredSize(new Dimension(FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT));
@@ -201,8 +201,18 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		}
 
 		if(currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
-			//movement commands go here
 
+			if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_SPACE) {
+				player.jump();
+			}
+
+			if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+				player.movingLeft = true;
+			}
+
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+				player.movingRight = true;
+			}
 
 		}
 
@@ -211,11 +221,19 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
-			//more movement commands go here
 
+		if(currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
+
+			if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+				player.movingLeft = false;
+			}
+
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+				player.movingRight = false;
+			}
 
 		}
+
 	}
 
 	@Override
@@ -226,18 +244,28 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	void addLevelOneObjects() {
 		objectManager.addPlatform(new Platform(0,550,150,50));
-		objectManager.addPlatform(new Platform(250,550,150,50));
+		objectManager.addPlatform(new Platform(210,550,225,50));
 		objectManager.addPlatform(new Platform(500,550,300,50));
-		objectManager.addSpike(new Spike(525,480,200,80));
-		
-		objectManager.addPlatform(new Platform(875,475,100,50));
+		objectManager.addSpike(new Spike(610,520,70,30));
+
+		objectManager.addPlatform(new Platform(850,475,125,50));
 
 		objectManager.addPlatform(new Platform(700,400,100,50));
 		objectManager.addPlatform(new Platform(500,400,100,50));
-		objectManager.addPlatform(new Platform(0,400,400,50));
-		//objectManager.addSpike(new Spike(525,480,200,80));
-		//objectManager.addSpike(new Spike(525,480,200,80));
-		
+		objectManager.addPlatform(new Platform(50,400,350,50));
+		objectManager.addSpike(new Spike(270,370,70,30));
+		objectManager.addSpike(new Spike(110,370,70,30));
+
+		objectManager.addPlatform(new Platform(-25,320,50,25));
+
+		objectManager.addPlatform(new Platform(70,240,75,40));
+		objectManager.addPlatform(new Platform(220,240,75,40));
+		objectManager.addPlatform(new Platform(370,240,75,40));
+		objectManager.addPlatform(new Platform(520,240,75,40));
+		objectManager.addPlatform(new Platform(670,240,75,40));
+
+		objectManager.addFinishLine(new FinishLine(850,220,120,40));
+
 	}
 	void addLevelTwoObjects() {
 
