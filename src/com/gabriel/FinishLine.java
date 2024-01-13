@@ -2,6 +2,7 @@ package com.gabriel;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -12,12 +13,16 @@ public class FinishLine extends GameObject {
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
 
+	Rectangle collisionBox = new Rectangle();
+
 	public FinishLine(int x, int y, int width, int height) {
 		super(x, y, width, height);
 
 		if (needImage) {
 			loadImage ("finishline.png");
 		}
+
+		collisionBox.setBounds(x, y, width, height);
 
 	}
 

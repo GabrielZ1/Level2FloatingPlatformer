@@ -107,7 +107,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		g.setFont(subTextFont);
 		g.drawString("Press ENTER to start", 190, 350);
-		g.drawString("Press SPACE for instructions", 160, 500);
+		g.drawString("Press SPACE for instructions", 160, 425);
 
 	}
 	void drawGameState(Graphics g) {

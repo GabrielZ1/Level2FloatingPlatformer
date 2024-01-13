@@ -2,6 +2,7 @@ package com.gabriel;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -16,13 +17,23 @@ public class Player extends GameObject{
 	public boolean movingLeft = false;
 	public boolean movingRight = false;
 
+	public boolean canJump = false;
+	
+	Rectangle collisionBox = new Rectangle();
+	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		speed = 5;
+		xSpeed = 5;
+		ySpeed = 0;
+		gravity = 1;
+		jumpPower = 15;
+		yLimit = 1000;
 
 		if (needImage) {
 			loadImage ("player.png");
 		}
+
+		collisionBox.setBounds(x, y, width, height);
 
 	}
 
@@ -51,9 +62,37 @@ public class Player extends GameObject{
 	public void setObjectManager(ObjectManager obj) {
 		this.objectManager = obj;
 	}
-	
-	void jump() {
+
+	public void update() {
+		//this updates the player's x-position
+		if(movingLeft && x > 0) {
+			x -= xSpeed;
+		}
+		if(movingRight && x < FloatingPlatformer.WIDTH - width) {
+			x += xSpeed;
+		}
+
+		//this updates the player's y-position
 		
+		ySpeed += gravity;
+		y += ySpeed;
+		
+		if(y >= yLimit + 1){
+			y = yLimit + 1;
+			ySpeed = 0;
+			canJump = true;
+		}
+
+		//this updates the player's collision box
+		collisionBox.setBounds(x, y, width, height);
+
 	}
-	
+
+	void jump() {
+		if(canJump = true){
+			ySpeed -= jumpPower;
+			canJump = false;
+		}
+	}
+
 }

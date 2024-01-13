@@ -10,7 +10,7 @@ public class ObjectManager implements ActionListener{
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
 	ArrayList<Spike> spikes = new ArrayList<Spike>();
 	ArrayList<FinishLine> finishLines = new ArrayList<FinishLine>();
-	
+
 
 	int currentLevel = 1;
 
@@ -25,7 +25,7 @@ public class ObjectManager implements ActionListener{
 	public void addSpike(Spike spike) {
 		spikes.add(spike);
 	}
-	
+
 	public void addFinishLine(FinishLine finishLine) {
 		finishLines.add(finishLine);
 	}
@@ -33,6 +33,9 @@ public class ObjectManager implements ActionListener{
 	public void update() {
 
 		//add collision check for player here probably + purge objects? + update player position?
+		checkCollision();
+		player.update();
+
 
 	}
 
@@ -65,7 +68,7 @@ public class ObjectManager implements ActionListener{
 				spikes.remove(i);	
 			}	
 		}
-		
+
 		for(int i = 0; i<finishLines.size(); i++) {
 			if(finishLines.get(i).isActive == false) {
 				finishLines.remove(i);	
@@ -82,10 +85,37 @@ public class ObjectManager implements ActionListener{
 
 
 	public void checkCollision() {
-
+		for(Platform p: platforms){
+			if(player.collisionBox.intersects(p.collisionBox)){
+				handleCollision(p);
+			}
+		}
+		
+		for(Spike s: spikes){
+			if(player.collisionBox.intersects(s.collisionBox)){
+				player.isActive = false;
+			}
+		}
+		
+		for(FinishLine f: finishLines){
+			if(player.collisionBox.intersects(f.collisionBox)){
+				currentLevel ++;
+			}
+		}
+		
+		if(player.y > FloatingPlatformer.HEIGHT) {
+			player.isActive = false;
+		}
 	}
 
-
+	private void handleCollision(Platform p){
+		if(player.ySpeed >= 0 && player.y + player.height < p.y + p.height/2){
+			player.yLimit = p.y - player.height;
+		}
+		else {
+			player.yLimit = 1000;
+		}
+	}
 	public int getCurrentLevel() {
 		return currentLevel;
 	}

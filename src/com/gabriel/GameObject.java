@@ -7,7 +7,11 @@ public class GameObject {
 	int y;
 	int width;
 	int height;
-	int speed = 0;
+	int xSpeed = 0;
+	int ySpeed = 0;
+	int gravity = 0;
+	int jumpPower = 0;
+	int yLimit = 0;
 	boolean isActive = true;
 	Rectangle collisionBox;
 
