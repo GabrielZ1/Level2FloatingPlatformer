@@ -1,18 +1,18 @@
 package com.gabriel;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class ObjectManager implements ActionListener{
+import javax.swing.JFrame;
+
+public class ObjectManager implements ActionListener {
 	Player player;
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
 	ArrayList<Spike> spikes = new ArrayList<Spike>();
 	ArrayList<FinishLine> finishLines = new ArrayList<FinishLine>();
-
-
-	int currentLevel = 1;
 
 	public ObjectManager (Player player) {
 		this.player = player;
@@ -30,12 +30,10 @@ public class ObjectManager implements ActionListener{
 		finishLines.add(finishLine);
 	}
 
-	public void update() {
+	public boolean update() {
 
-		//add collision check for player here probably + purge objects? + update player position?
-		checkCollision();
 		player.update();
-
+		return checkCollision();
 
 	}
 
@@ -58,21 +56,15 @@ public class ObjectManager implements ActionListener{
 	public void purgeObjects() {
 
 		for(int i = 0; i<platforms.size(); i++) {
-			if(platforms.get(i).isActive == false) {
-				platforms.remove(i);	
-			}	
+			platforms.remove(i);	
 		}
 
 		for(int i = 0; i<spikes.size(); i++) {
-			if(spikes.get(i).isActive == false) {
-				spikes.remove(i);	
-			}	
+			spikes.remove(i);	
 		}
 
 		for(int i = 0; i<finishLines.size(); i++) {
-			if(finishLines.get(i).isActive == false) {
-				finishLines.remove(i);	
-			}	
+			finishLines.remove(i);	
 		}
 
 	}
@@ -83,29 +75,45 @@ public class ObjectManager implements ActionListener{
 
 	}
 
-
-	public void checkCollision() {
+	//returns true if player collides with finish line
+	public boolean checkCollision() {
 		for(Platform p: platforms){
 			if(player.collisionBox.intersects(p.collisionBox)){
 				handleCollision(p);
 			}
 		}
-		
+
 		for(Spike s: spikes){
 			if(player.collisionBox.intersects(s.collisionBox)){
 				player.isActive = false;
 			}
 		}
-		
-		for(FinishLine f: finishLines){
-			if(player.collisionBox.intersects(f.collisionBox)){
-				currentLevel ++;
+
+		for(FinishLine fL: finishLines){
+			if(player.collisionBox.intersects(fL.collisionBox)){
+
+				if(true /*put something here that makes it check if currentLevel = LEVELONE*/) {
+					player.x = 25;
+					player.y = 875;
+					player.width = 50;
+					player.height = 50;
+				}
+				//	else { or else if currentLevel = LEVELTWO
+				//	player.x = 25
+				//	player.y = 725
+				//	player.width = 10;
+				//	player.height = 10;
+				//	}
+
+				return true;
+
 			}
 		}
-		
+
 		if(player.y > FloatingPlatformer.HEIGHT) {
 			player.isActive = false;
 		}
+		return false;
 	}
 
 	private void handleCollision(Platform p){
@@ -115,9 +123,6 @@ public class ObjectManager implements ActionListener{
 		else {
 			player.yLimit = 1000;
 		}
-	}
-	public int getCurrentLevel() {
-		return currentLevel;
 	}
 
 

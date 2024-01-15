@@ -18,13 +18,14 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
-	final int MENU = 0;
-	final int LEVELONE = 1;
-	final int LEVELTWO = 2;
-	final int LEVELTHREE = 3;
-	final int END = 4;
+	public final int MENU = 0;
+	public final int LEVELONE = 1;
+	public final int LEVELTWO = 2;
+	public final int LEVELTHREE = 3;
+	public final int END = 4;
 
-	int currentState = MENU;
+	public int currentState = MENU;
+	public int topLevel = 1;
 
 	Font titleFont;
 	Font subTextFont;
@@ -62,14 +63,19 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			FloatingPlatformer.WIDTH = 600;
 			FloatingPlatformer.HEIGHT = 600;
 
+			setPreferredSize(new Dimension(FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT));
+			frame.pack();
+
 			drawMenuState(g);
 
 		}
+
 		else if (currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
 
 			drawGameState(g);
 
 		}
+
 		else if (currentState == END) {
 			FloatingPlatformer.WIDTH = 600;
 			FloatingPlatformer.HEIGHT = 600;
@@ -87,9 +93,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 
 	void updateGameState() {
-		objectManager.update();
+		if(objectManager.update()) {
+			currentState++;
+			topLevel = currentState;
+		}
+
 		if(player.isActive == false) {
-			//put what happens here when u die (fall into void or get hit by a spike probably)
+			currentState = END;
 		}
 
 	}
@@ -121,12 +131,40 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		}
 
 		if(currentState == LEVELONE) {
+			
+			//NOTE: when changing to the level 2 (beat level 1), use these lines below but set width to 600 and height to 1000 (for lvl 3 same but 800 800)
+			//ALSO make sure to call objectManager.purgeObjects(); & i think i have to deactivate all objects? WHEN SWITCHING TO A NEW LEVEL!
+
+			FloatingPlatformer.WIDTH = 1000;
+			FloatingPlatformer.HEIGHT = 600;
+
+			setPreferredSize(new Dimension(FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT));
+			frame.pack();
+			updateUI();
+
 			addLevelOneObjects();
 		}
+
 		else if(currentState == LEVELTWO) {
+
+			FloatingPlatformer.WIDTH = 600;
+			FloatingPlatformer.HEIGHT = 1000;
+
+			setPreferredSize(new Dimension(FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT));
+			frame.pack();
+			updateUI();
+			
 			addLevelTwoObjects();
 		}
 		else if(currentState == LEVELTHREE) {
+
+			FloatingPlatformer.WIDTH = 800;
+			FloatingPlatformer.HEIGHT = 800;
+
+			setPreferredSize(new Dimension(FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT));
+			frame.pack();
+			updateUI();
+
 			addLevelThreeObjects();
 		}
 
@@ -134,21 +172,29 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	}
 	void drawEndState(Graphics g) {
-		g.setColor(Color.GREEN);	
-		g.fillRect(0, 0, FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT);
 
-		g.setFont(titleFont);
-		g.setColor(Color.BLACK);
-		g.drawString("Game Over", 125, 150);
+		if(topLevel <= 3) {
+			g.setColor(Color.RED);	
+			g.fillRect(0, 0, FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT);
 
-		g.setFont(subTextFont);
-		if(objectManager.getCurrentLevel() <= 3) {
-			g.drawString("You got to level " + objectManager.getCurrentLevel() + ".", 155, 350);
+			g.setFont(titleFont);
+			g.setColor(Color.BLACK);
+			g.drawString("Game Over", 165, 150);
+
+			g.setFont(subTextFont);
+			g.drawString("You got to level " + topLevel + ".", 205, 350);
+
 		}
 		else {
-			g.drawString("Congratulations, you won!", 155, 350);
+			g.setColor(Color.GREEN);	
+			g.fillRect(0, 0, FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT);
+			
+			g.setFont(titleFont);
+			g.setColor(Color.BLACK);
+			g.drawString("Congratulations, you won!", 20, 225);
 		}
-		g.drawString("Press ENTER to restart", 140, 500);
+		g.setFont(subTextFont);
+		g.drawString("Press ENTER to restart", 180, 425);
 
 	}
 
@@ -176,19 +222,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END) {
 				currentState = MENU;
-				player = new Player(50, 525, 25, 25);
-				objectManager = new ObjectManager(player);
-				player.setObjectManager(objectManager);
+				resetPlayer();
 			}
 			else if (currentState == MENU){
 				currentState = LEVELONE;
-
-				//NOTE: when changing to the level 2 (beat level 1), use these 4 lines below but set width to 600 and height to 1000 (for lvl 3 same but 800 800)
-				//ALSO make sure to call objectManager.purgeObjects(); & i think i have to deactivate all objects? WHEN SWITCHING TO A NEW LEVEL!
-				FloatingPlatformer.WIDTH = 1000;
-				FloatingPlatformer.HEIGHT = 600;
-				setPreferredSize(new Dimension(FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT));
-				frame.pack();
 
 			}
 
@@ -196,7 +233,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		if(currentState == MENU) {
 			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-				JOptionPane.showMessageDialog (null, "Use the arrow keys to move. Reach the green finish lined while avoiding falling into the void or the spikes to beat the level.");
+				JOptionPane.showMessageDialog (null, "Use the arrow keys to move. Reach the finish line while avoiding falling into the void or the spikes to beat the level.");
 			}
 		}
 
@@ -243,6 +280,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 
 	void addLevelOneObjects() {
+		objectManager.purgeObjects();
+		
 		objectManager.addPlatform(new Platform(0,550,150,50));
 		objectManager.addPlatform(new Platform(210,550,225,50));
 		objectManager.addPlatform(new Platform(500,550,300,50));
@@ -268,12 +307,21 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	}
 	void addLevelTwoObjects() {
+		objectManager.purgeObjects();
+		
+		objectManager.addPlatform(new Platform(0,900,100,50));
+
+		objectManager.addFinishLine(new FinishLine(475,50,100,40));
 
 	}
 	void addLevelThreeObjects() {
+		objectManager.purgeObjects();
+		
+		objectManager.addPlatform(new Platform(0,750,100,50));
 
+		objectManager.addFinishLine(new FinishLine(20,20,50,15));
+		
 	}
-
 
 	void loadImage(String imageFile) {
 		if (needImage) {
@@ -285,5 +333,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			}
 			needImage = false;
 		}
+	}
+	void resetPlayer() {
+		topLevel = 1;
+		player.isActive = true;
+		player = new Player(50, 525, 25, 25);
+		objectManager = new ObjectManager(player);
+		player.setObjectManager(objectManager);
 	}
 }

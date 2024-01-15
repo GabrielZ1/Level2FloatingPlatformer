@@ -23,10 +23,10 @@ public class Player extends GameObject{
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		xSpeed = 5;
+		xSpeed = 6;
 		ySpeed = 0;
 		gravity = 1;
-		jumpPower = 15;
+		jumpPower = 13;
 		yLimit = 1000;
 
 		if (needImage) {
