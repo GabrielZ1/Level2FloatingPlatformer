@@ -98,6 +98,7 @@ public class ObjectManager implements ActionListener {
 					player.width = 50;
 					player.height = 50;
 				}
+				
 				//	else { or else if currentLevel = LEVELTWO
 				//	player.x = 25
 				//	player.y = 725
