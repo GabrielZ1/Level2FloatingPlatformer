@@ -18,16 +18,16 @@ public class Player extends GameObject{
 	public boolean movingRight = false;
 
 	public boolean canJump = false;
-	
+
 	Rectangle collisionBox = new Rectangle();
-	
+
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		xSpeed = 6;
 		ySpeed = 0;
 		gravity = 1;
 		jumpPower = 13;
-		yLimit = 1000;
+		yLimit = 2000;
 
 		if (needImage) {
 			loadImage ("player.png");
@@ -73,10 +73,16 @@ public class Player extends GameObject{
 		}
 
 		//this updates the player's y-position
-		
+
 		ySpeed += gravity;
-		y += ySpeed;
-		
+		y += ySpeed;		
+
+		//sets the terminal velocity to 15
+		if(ySpeed > 15) {
+			ySpeed = 15;
+		}
+
+
 		if(y >= yLimit + 1){
 			y = yLimit + 1;
 			ySpeed = 0;
@@ -89,7 +95,7 @@ public class Player extends GameObject{
 	}
 
 	void jump() {
-		if(canJump = true){
+		if(canJump == true){
 			ySpeed -= jumpPower;
 			canJump = false;
 		}

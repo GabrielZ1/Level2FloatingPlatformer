@@ -18,13 +18,13 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
-	public final int MENU = 0;
-	public final int LEVELONE = 1;
-	public final int LEVELTWO = 2;
-	public final int LEVELTHREE = 3;
-	public final int END = 4;
+	public static final int MENU = 0;
+	public static final int LEVELONE = 1;
+	public static final int LEVELTWO = 2;
+	public static final int LEVELTHREE = 3;
+	public static final int END = 4;
 
-	public int currentState = MENU;
+	public static int currentState = MENU;
 	public int topLevel = 1;
 
 	Font titleFont;
@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	Timer frameDraw;
 
-	Player player = new Player(50, 525, 25, 25);
+	Player player = new Player(0, 525, 25, 25);
 
 	ObjectManager objectManager = new ObjectManager(player);
 
@@ -131,9 +131,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		}
 
 		if(currentState == LEVELONE) {
-			
-			//NOTE: when changing to the level 2 (beat level 1), use these lines below but set width to 600 and height to 1000 (for lvl 3 same but 800 800)
-			//ALSO make sure to call objectManager.purgeObjects(); & i think i have to deactivate all objects? WHEN SWITCHING TO A NEW LEVEL!
 
 			FloatingPlatformer.WIDTH = 1000;
 			FloatingPlatformer.HEIGHT = 600;
@@ -337,7 +334,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	void resetPlayer() {
 		topLevel = 1;
 		player.isActive = true;
-		player = new Player(50, 525, 25, 25);
+		player = new Player(0, 525, 25, 25);
 		objectManager = new ObjectManager(player);
 		player.setObjectManager(objectManager);
 	}

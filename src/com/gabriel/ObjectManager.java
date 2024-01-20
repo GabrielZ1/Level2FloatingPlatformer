@@ -33,7 +33,10 @@ public class ObjectManager implements ActionListener {
 	public boolean update() {
 
 		player.update();
-		return checkCollision();
+		checkDeath();
+		checkPlatformCollision();
+
+		return checkFinishLineCollision();
 
 	}
 
@@ -75,13 +78,33 @@ public class ObjectManager implements ActionListener {
 
 	}
 
-	//returns true if player collides with finish line
-	public boolean checkCollision() {
-		for(Platform p: platforms){
-			if(player.collisionBox.intersects(p.collisionBox)){
-				handleCollision(p);
+	//method below returns true if player collides with finish line
+	public boolean checkFinishLineCollision() {
+		for(FinishLine fL: finishLines){
+			if(player.collisionBox.intersects(fL.collisionBox)){
+
+				if(GamePanel.currentState == GamePanel.LEVELONE) {
+					player.width = 50;
+					player.height = 50;
+					player.jumpPower = 10;
+					player.x = 0;
+					player.y = 850;
+				}
+
+				else if (GamePanel.currentState == GamePanel.LEVELTWO){
+					player.width = 10;
+					player.height = 10;
+					player.jumpPower = 20;
+					player.x = 0;
+					player.y = 740;
+				}
+				return true;
 			}
 		}
+		return false;
+	}
+
+	public void checkDeath() {
 
 		for(Spike s: spikes){
 			if(player.collisionBox.intersects(s.collisionBox)){
@@ -89,31 +112,20 @@ public class ObjectManager implements ActionListener {
 			}
 		}
 
-		for(FinishLine fL: finishLines){
-			if(player.collisionBox.intersects(fL.collisionBox)){
-
-				if(true /*put something here that makes it check if currentLevel = LEVELONE*/) {
-					player.x = 25;
-					player.y = 875;
-					player.width = 50;
-					player.height = 50;
-				}
-				
-				//	else { or else if currentLevel = LEVELTWO
-				//	player.x = 25
-				//	player.y = 725
-				//	player.width = 10;
-				//	player.height = 10;
-				//	}
-
-				return true;
-
-			}
-		}
-
 		if(player.y > FloatingPlatformer.HEIGHT) {
 			player.isActive = false;
 		}
+
+	}
+
+	public boolean checkPlatformCollision() {
+		for(Platform p: platforms){
+			if(player.collisionBox.intersects(p.collisionBox)){
+				handleCollision(p);
+				return true;
+			}
+		}
+		player.yLimit = 2000;
 		return false;
 	}
 
@@ -122,7 +134,7 @@ public class ObjectManager implements ActionListener {
 			player.yLimit = p.y - player.height;
 		}
 		else {
-			player.yLimit = 1000;
+			player.yLimit = 2000;
 		}
 	}
 
