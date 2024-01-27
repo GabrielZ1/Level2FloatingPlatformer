@@ -150,7 +150,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			setPreferredSize(new Dimension(FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT));
 			frame.pack();
 			updateUI();
-			
+
 			addLevelTwoObjects();
 		}
 		else if(currentState == LEVELTHREE) {
@@ -185,7 +185,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		else {
 			g.setColor(Color.GREEN);	
 			g.fillRect(0, 0, FloatingPlatformer.WIDTH, FloatingPlatformer.HEIGHT);
-			
+
 			g.setFont(titleFont);
 			g.setColor(Color.BLACK);
 			g.drawString("Congratulations, you won!", 20, 225);
@@ -230,7 +230,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		if(currentState == MENU) {
 			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-				JOptionPane.showMessageDialog (null, "Use the arrow keys to move. Reach the finish line while avoiding falling into the void or the spikes to beat the level.");
+				JOptionPane.showMessageDialog (null, "Use the arrow keys to move. Reach the finish line while avoiding falling into the void or the spikes to beat the level. \nSpeed Powerup: Move faster for the rest of the level. \nWings Powerup: Gain the ability to double jump for the rest of the level.");
 			}
 		}
 
@@ -257,15 +257,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		// TODO Auto-generated method stub
 
 		if(currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
+			for(Platform p: objectManager.platforms) {
+				//below add parameters to make it so player doesnt go inside platform
+				if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A &&) {
+					player.movingLeft = false;
+				}
 
-			if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-				player.movingLeft = false;
+				if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D &&) {
+					player.movingRight = false;
+				}
 			}
-
-			if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-				player.movingRight = false;
-			}
-
 		}
 
 	}
@@ -278,6 +279,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	void addLevelOneObjects() {
 		objectManager.purgeObjects();
+
+		//below is temporary wings
+		objectManager.addWingsPowerup(new WingsPowerup(200,500,100,100));
 		
 		objectManager.addPlatform(new Platform(0,550,150,50));
 		objectManager.addPlatform(new Platform(210,550,225,50));
@@ -305,7 +309,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 	void addLevelTwoObjects() {
 		objectManager.purgeObjects();
-		
+
 		objectManager.addPlatform(new Platform(0,900,100,50));
 
 		objectManager.addFinishLine(new FinishLine(475,50,100,40));
@@ -313,11 +317,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 	void addLevelThreeObjects() {
 		objectManager.purgeObjects();
-		
+
 		objectManager.addPlatform(new Platform(0,750,100,50));
 
 		objectManager.addFinishLine(new FinishLine(20,20,50,15));
-		
+
 	}
 
 	void loadImage(String imageFile) {
@@ -337,5 +341,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		player = new Player(0, 525, 25, 25);
 		objectManager = new ObjectManager(player);
 		player.setObjectManager(objectManager);
+		player.hasWings = false;
+		player.xSpeed = 6;
+		player.currentJumps = 0;
 	}
 }

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-public class Spike extends GameObject {
+public class WingsPowerup extends GameObject {
 
 	public static BufferedImage image;
 	public static boolean needImage = true;
@@ -15,11 +15,11 @@ public class Spike extends GameObject {
 
 	Rectangle collisionBox = new Rectangle();
 	
-	public Spike(int x, int y, int width, int height) {
+	public WingsPowerup(int x, int y, int width, int height) {
 		super(x, y, width, height);
 
 		if (needImage) {
-			loadImage ("spike.png");
+			loadImage ("wings.png");
 		}
 		
 		collisionBox.setBounds(x, y, width, height);
@@ -30,7 +30,7 @@ public class Spike extends GameObject {
 		if (gotImage) {
 			g.drawImage(image, x, y, width, height, null);
 		} else {
-			g.setColor(Color.BLACK);
+			g.setColor(Color.WHITE);
 			g.fillRect(x, y, width, height);
 		}
 	}

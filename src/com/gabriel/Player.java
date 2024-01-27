@@ -19,6 +19,10 @@ public class Player extends GameObject{
 
 	public boolean canJump = false;
 
+	public boolean hasWings = false;
+
+	public int currentJumps = 0;
+
 	Rectangle collisionBox = new Rectangle();
 
 	public Player(int x, int y, int width, int height) {
@@ -65,15 +69,16 @@ public class Player extends GameObject{
 
 	public void update() {
 		//this updates the player's x-position
-		if(movingLeft && x > 0) {
-			x -= xSpeed;
-		}
-		if(movingRight && x < FloatingPlatformer.WIDTH - width) {
-			x += xSpeed;
-		}
 
+			if(movingLeft && x > 0) {
+				x -= xSpeed;
+			}
+			if(movingRight && x < FloatingPlatformer.WIDTH - width) {
+				x += xSpeed;
+			}
+	
 		//this updates the player's y-position
-
+		
 		ySpeed += gravity;
 		y += ySpeed;		
 
@@ -82,11 +87,9 @@ public class Player extends GameObject{
 			ySpeed = 15;
 		}
 
-
 		if(y >= yLimit + 1){
 			y = yLimit + 1;
 			ySpeed = 0;
-			canJump = true;
 		}
 
 		//this updates the player's collision box
@@ -95,10 +98,20 @@ public class Player extends GameObject{
 	}
 
 	void jump() {
-		if(canJump == true){
-			ySpeed -= jumpPower;
-			canJump = false;
+
+		if(hasWings) {
+			if(currentJumps < 2) {
+				ySpeed -= jumpPower;
+				currentJumps ++;
+			}
+		}		
+		else {
+			if(currentJumps < 1) {
+				ySpeed -= jumpPower;
+				currentJumps ++;
+			}
 		}
+
 	}
 
 }

@@ -13,6 +13,9 @@ public class ObjectManager implements ActionListener {
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
 	ArrayList<Spike> spikes = new ArrayList<Spike>();
 	ArrayList<FinishLine> finishLines = new ArrayList<FinishLine>();
+	ArrayList<SpeedPowerup> speedPowerups = new ArrayList<SpeedPowerup>();
+	ArrayList<WingsPowerup> wingPowerups = new ArrayList<WingsPowerup>();
+
 
 	public ObjectManager (Player player) {
 		this.player = player;
@@ -30,12 +33,24 @@ public class ObjectManager implements ActionListener {
 		finishLines.add(finishLine);
 	}
 
+	public void addSpeedPowerup(SpeedPowerup speed) {
+		speedPowerups.add(speed);
+	}
+
+	public void addWingsPowerup(WingsPowerup wing) {
+		wingPowerups.add(wing);
+	}
+
 	public boolean update() {
 
 		player.update();
 		checkDeath();
 		checkPlatformCollision();
+		checkSpeedCollision();
+		checkWingsCollision();
 
+		System.out.println(player.currentJumps);
+		
 		return checkFinishLineCollision();
 
 	}
@@ -54,6 +69,14 @@ public class ObjectManager implements ActionListener {
 		for(int i = 0; i<finishLines.size(); i++) {
 			finishLines.get(i).draw(g);
 		}
+
+		for(int i = 0; i<speedPowerups.size(); i++) {
+			speedPowerups.get(i).draw(g);
+		}
+
+		for(int i = 0; i<wingPowerups.size(); i++) {
+			wingPowerups.get(i).draw(g);
+		}
 	}
 
 	public void purgeObjects() {
@@ -68,6 +91,14 @@ public class ObjectManager implements ActionListener {
 
 		for(int i = 0; i<finishLines.size(); i++) {
 			finishLines.remove(i);	
+		}
+
+		for(int i = 0; i<speedPowerups.size(); i++) {
+			speedPowerups.remove(i);	
+		}
+
+		for(int i = 0; i<wingPowerups.size(); i++) {
+			wingPowerups.remove(i);	
 		}
 
 	}
@@ -121,8 +152,14 @@ public class ObjectManager implements ActionListener {
 	public boolean checkPlatformCollision() {
 		for(Platform p: platforms){
 			if(player.collisionBox.intersects(p.collisionBox)){
+				if(player.y + player.height - 1 <= p.y) {
+					player.currentJumps = 0;
+				}
 				handleCollision(p);
 				return true;
+			}
+			else if(player.hasWings = false) {
+				player.currentJumps = 1;
 			}
 		}
 		player.yLimit = 2000;
@@ -138,5 +175,27 @@ public class ObjectManager implements ActionListener {
 		}
 	}
 
+	public void checkSpeedCollision() {
+		for(SpeedPowerup sp: speedPowerups){
+			if(player.collisionBox.intersects(sp.collisionBox)) {
+				player.xSpeed = 10;
+				for(int i = 0; i<speedPowerups.size(); i++) {
+					speedPowerups.remove(i);	
+				}
+
+			}
+		}
+	}
+
+	public void checkWingsCollision() {
+		for(WingsPowerup w: wingPowerups){
+			if(player.collisionBox.intersects(w.collisionBox)) {
+				player.hasWings = true;
+				for(int i = 0; i<wingPowerups.size(); i++) {
+					wingPowerups.remove(i);	
+				}
+			}
+		}
+	}
 
 }
