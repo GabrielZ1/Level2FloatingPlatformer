@@ -19,7 +19,7 @@ public class SpeedPowerup extends GameObject {
 		super(x, y, width, height);
 
 		if (needImage) {
-			loadImage ("speed.png");
+			loadImage ("speedPowerup.png");
 		}
 		
 		collisionBox.setBounds(x, y, width, height);

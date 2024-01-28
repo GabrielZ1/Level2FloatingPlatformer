@@ -70,15 +70,15 @@ public class Player extends GameObject{
 	public void update() {
 		//this updates the player's x-position
 
-			if(movingLeft && x > 0) {
-				x -= xSpeed;
-			}
-			if(movingRight && x < FloatingPlatformer.WIDTH - width) {
-				x += xSpeed;
-			}
-	
+		if(movingLeft && x > 0) {
+			x -= xSpeed;
+		}
+		if(movingRight && x < FloatingPlatformer.WIDTH - width) {
+			x += xSpeed;
+		}
+
 		//this updates the player's y-position
-		
+
 		ySpeed += gravity;
 		y += ySpeed;		
 
@@ -99,17 +99,14 @@ public class Player extends GameObject{
 
 	void jump() {
 
-		if(hasWings) {
-			if(currentJumps < 2) {
-				ySpeed -= jumpPower;
-				currentJumps ++;
-			}
-		}		
-		else {
-			if(currentJumps < 1) {
-				ySpeed -= jumpPower;
-				currentJumps ++;
-			}
+		if(hasWings && currentJumps < 2) {
+			ySpeed -= jumpPower;
+			currentJumps ++;
+		}	
+		
+		else if(currentJumps < 1) {
+			ySpeed -= jumpPower;
+			currentJumps ++;
 		}
 
 	}

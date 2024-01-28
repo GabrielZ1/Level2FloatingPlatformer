@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-public class WingsPowerup extends GameObject {
+public class HighJumpPowerup extends GameObject {
 
 	public static BufferedImage image;
 	public static boolean needImage = true;
@@ -15,11 +15,11 @@ public class WingsPowerup extends GameObject {
 
 	Rectangle collisionBox = new Rectangle();
 	
-	public WingsPowerup(int x, int y, int width, int height) {
+	public HighJumpPowerup(int x, int y, int width, int height) {
 		super(x, y, width, height);
 
 		if (needImage) {
-			loadImage ("wingsPowerup.png");
+			loadImage ("highJumpPowerup.png");
 		}
 		
 		collisionBox.setBounds(x, y, width, height);
@@ -30,7 +30,7 @@ public class WingsPowerup extends GameObject {
 		if (gotImage) {
 			g.drawImage(image, x, y, width, height, null);
 		} else {
-			g.setColor(Color.WHITE);
+			g.setColor(Color.YELLOW);
 			g.fillRect(x, y, width, height);
 		}
 	}
