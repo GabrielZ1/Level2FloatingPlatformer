@@ -37,7 +37,7 @@ public class ObjectManager implements ActionListener {
 	public void addSpeedPowerup(SpeedPowerup speed) {
 		speedPowerups.add(speed);
 	}
-	
+
 	public void addHighJumpPowerup(HighJumpPowerup highJump) {
 		highJumpPowerups.add(highJump);
 	}
@@ -77,7 +77,7 @@ public class ObjectManager implements ActionListener {
 		for(int i = 0; i<speedPowerups.size(); i++) {
 			speedPowerups.get(i).draw(g);
 		}
-		
+
 		for(int i = 0; i<highJumpPowerups.size(); i++) {
 			highJumpPowerups.get(i).draw(g);
 		}
@@ -85,7 +85,7 @@ public class ObjectManager implements ActionListener {
 		for(int i = 0; i<wingPowerups.size(); i++) {
 			wingPowerups.get(i).draw(g);
 		}
-		
+
 	}
 
 	public void purgeObjects() {
@@ -105,7 +105,7 @@ public class ObjectManager implements ActionListener {
 		for(int i = 0; i<speedPowerups.size(); i++) {
 			speedPowerups.remove(i);	
 		}
-		
+
 		for(int i = 0; i<highJumpPowerups.size(); i++) {
 			highJumpPowerups.remove(i);	
 		}
@@ -192,30 +192,30 @@ public class ObjectManager implements ActionListener {
 	}
 
 	public void checkSpeedCollision() {
-		for(SpeedPowerup sp: speedPowerups){
-			if(player.collisionBox.intersects(sp.collisionBox)) {
-				player.xSpeed = 12;
-				//remove speed powerup somehow
-
+		for(int i = 0; i < speedPowerups.size(); i++) {
+			if(player.collisionBox.intersects(speedPowerups.get(i).collisionBox)) {
+				player.xSpeed = 11;
+				speedPowerups.remove(i);
 			}
 		}
+
 	}
-	
+
 	public void checkHighJumpCollision() {
-		for(HighJumpPowerup hj: highJumpPowerups){
-			if(player.collisionBox.intersects(hj.collisionBox)) {
+		for(int i = 0; i < highJumpPowerups.size(); i++){
+			if(player.collisionBox.intersects(highJumpPowerups.get(i).collisionBox)) {
 				player.jumpPower = 15;
-				//remove high jump powerup somehow
+				highJumpPowerups.remove(i);
 
 			}
 		}
 	}
 
 	public void checkWingsCollision() {
-		for(WingsPowerup w: wingPowerups){
-			if(player.collisionBox.intersects(w.collisionBox)) {
+		for(int i = 0; i< wingPowerups.size(); i++){
+			if(player.collisionBox.intersects(wingPowerups.get(i).collisionBox)) {
 				player.hasWings = true;
-				//remove wings powerup somehow
+				wingPowerups.remove(i);
 			}
 		}
 	}

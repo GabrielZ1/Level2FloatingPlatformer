@@ -27,6 +27,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public static int currentState = MENU;
 	public int topLevel = 1;
 
+	public boolean levelOneObjectsAdded = false;
+	public boolean levelTwoObjectsAdded = false;
+	public boolean levelThreeObjectsAdded = false;
+
+	//public boolean canMoveLeft = true;
+	//public boolean canMoveRight = true;
+
 	Font titleFont;
 	Font subTextFont;
 
@@ -99,11 +106,38 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			topLevel = currentState;
 		}
 
+
+		//		for(Platform p: objectManager.platforms) {
+		//
+		//			if(player.collisionBox.intersects(p.collisionBox) && player.x > p.x+p.width-3) {
+		//				canMoveLeft = false;
+		//				break;
+		//			}
+		//			else {
+		//				canMoveLeft = true;
+		//			}
+		//
+		//		}
+		//
+		//		for(Platform p: objectManager.platforms) {
+		//
+		//			if(player.collisionBox.intersects(p.collisionBox) && player.x+player.width < p.x+3) {
+		//				canMoveRight = false;
+		//				break;
+		//			}
+		//			else {
+		//				canMoveRight = true;
+		//			}
+		//
+		//		}
+
+
 		if(player.isActive == false) {
 			currentState = END;
 		}
 
 	}
+
 	void updateEndState() {
 
 	}
@@ -140,7 +174,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			frame.pack();
 			updateUI();
 
-			addLevelOneObjects();
+			if(levelOneObjectsAdded == false) {
+				addLevelOneObjects();
+			}
+
 		}
 
 		else if(currentState == LEVELTWO) {
@@ -152,7 +189,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			frame.pack();
 			updateUI();
 
-			addLevelTwoObjects();
+
+			if(levelTwoObjectsAdded == false) {
+				addLevelTwoObjects();
+			}
+
 		}
 		else if(currentState == LEVELTHREE) {
 
@@ -163,7 +204,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			frame.pack();
 			updateUI();
 
-			addLevelThreeObjects();
+			if(levelThreeObjectsAdded == false) {
+				addLevelThreeObjects();
+			}
 		}
 
 		objectManager.draw(g);
@@ -231,7 +274,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		if(currentState == MENU) {
 			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-				JOptionPane.showMessageDialog (null, "Use the arrow keys or WASD to move and SPACE to jump.\nReach the finish line while avoiding falling into the void or the spikes to beat the level. \n\nSpeed Powerup: Move faster for the rest of the level. \nHigh Jump Powerup: Jump higher for the rest of the level. \nWings Powerup: Gain the ability to double jump for the rest of the level.");
+				JOptionPane.showMessageDialog (null, "Use the arrow keys or WASD to move and SPACE to jump.\nReach the finish line while avoiding falling into the void or the spikes to beat the level. \nBeat all 3 levels without dying to complete the game. \n\nSpeed Powerup: Move faster for the rest of the level. \nHigh Jump Powerup: Jump higher for the rest of the level. \nWings Powerup: Gain the ability to double jump for the rest of the level.");
 			}
 		}
 
@@ -241,11 +284,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 				player.jump();
 			}
 
-			if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+			if(e.getKeyCode() == KeyEvent.VK_LEFT|| e.getKeyCode() == KeyEvent.VK_A) {
 				player.movingLeft = true;
 			}
 
-			if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT|| e.getKeyCode() == KeyEvent.VK_D) {
 				player.movingRight = true;
 			}
 
@@ -259,10 +302,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		if(currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
 
-			//below add parameters to make it so player doesnt go inside platform
 			if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 				player.movingLeft = false;
 			}
+
 
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 				player.movingRight = false;
@@ -280,6 +323,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	void addLevelOneObjects() {
 		objectManager.purgeObjects();
 
+
+		//temporary
+		objectManager.addFinishLine(new FinishLine(175,520,50,50));
+		objectManager.addPlatform(new Platform(72,505,50,50));
+
+
+
 		objectManager.addPlatform(new Platform(0,550,150,50));
 		objectManager.addPlatform(new Platform(210,550,225,50));
 		objectManager.addPlatform(new Platform(500,550,300,50));
@@ -293,7 +343,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addSpike(new Spike(270,370,70,30));
 		objectManager.addSpike(new Spike(110,370,70,30));
 
-		objectManager.addPlatform(new Platform(-25,320,50,25));
+		objectManager.addPlatform(new Platform(-25,320,60,40));
 
 		objectManager.addPlatform(new Platform(70,240,75,40));
 		objectManager.addPlatform(new Platform(220,210,75,40));
@@ -303,6 +353,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		objectManager.addFinishLine(new FinishLine(850,90,120,40));
 
+		levelOneObjectsAdded = true;
 	}
 	void addLevelTwoObjects() {
 		objectManager.purgeObjects();
@@ -348,18 +399,20 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addPlatform(new Platform(325,200,25,10));
 		objectManager.addFinishLine(new FinishLine(450,125,100,40));
 
+		levelTwoObjectsAdded = true;
 	}
 	void addLevelThreeObjects() {
 		objectManager.purgeObjects();
 
 		objectManager.addPlatform(new Platform(0,750,100,50));
 
-		
+
 		//level three objects go here
 
 
 		objectManager.addFinishLine(new FinishLine(20,20,50,15));
 
+		levelThreeObjectsAdded = true;
 	}
 
 	void loadImage(String imageFile) {
@@ -383,5 +436,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		player.xSpeed = 6;
 		player.jumpPower = 13;
 		player.currentJumps = 0;
+		levelOneObjectsAdded = false;
+		levelTwoObjectsAdded = false;
+		levelThreeObjectsAdded = false;
 	}
 }
