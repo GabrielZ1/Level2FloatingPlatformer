@@ -334,7 +334,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 	void addLevelOneObjects() {
 
-		loadImage ("background.png");				
+		loadImage ("background1.png");				
 		objectManager.purgeObjects();
 
 
