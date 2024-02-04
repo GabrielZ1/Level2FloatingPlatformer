@@ -90,29 +90,12 @@ public class ObjectManager implements ActionListener {
 
 	public void purgeObjects() {
 
-		for(int i = 0; i<platforms.size(); i++) {
-			platforms.remove(i);	
-		}
-
-		for(int i = 0; i<spikes.size(); i++) {
-			spikes.remove(i);	
-		}
-
-		for(int i = 0; i<finishLines.size(); i++) {
-			finishLines.remove(i);	
-		}
-
-		for(int i = 0; i<speedPowerups.size(); i++) {
-			speedPowerups.remove(i);	
-		}
-
-		for(int i = 0; i<highJumpPowerups.size(); i++) {
-			highJumpPowerups.remove(i);	
-		}
-
-		for(int i = 0; i<wingPowerups.size(); i++) {
-			wingPowerups.remove(i);	
-		}
+		platforms.clear();
+		spikes.clear();
+		finishLines.clear();
+		speedPowerups.clear();
+		highJumpPowerups.clear();
+		wingPowerups.clear();
 
 	}
 
@@ -126,7 +109,6 @@ public class ObjectManager implements ActionListener {
 	public boolean checkFinishLineCollision() {
 		for(FinishLine fL: finishLines){
 			if(player.collisionBox.intersects(fL.collisionBox)){
-
 				if(GamePanel.currentState == GamePanel.LEVELONE) {
 					player.width = 50;
 					player.height = 50;
@@ -183,7 +165,7 @@ public class ObjectManager implements ActionListener {
 	}
 
 	private void handleCollision(Platform p){
-		if(player.ySpeed >= 0 && player.y + player.height < p.y + p.height/2){
+		if(player.ySpeed >= 0 && player.y + player.height < p.y + p.height/4 && player.x + player.width >= p.x + 3 && player.x <= p.x + p.width - 3){
 			player.yLimit = p.y - player.height;
 		}
 		else {

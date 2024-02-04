@@ -31,8 +31,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public boolean levelTwoObjectsAdded = false;
 	public boolean levelThreeObjectsAdded = false;
 
-	//public boolean canMoveLeft = true;
-	//public boolean canMoveRight = true;
+	public boolean canMoveLeft = true;
+	public boolean canMoveRight = true;
 
 	Font titleFont;
 	Font subTextFont;
@@ -57,10 +57,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		frameDraw.start();
 
 		this.frame = frame;
-
-		if (needImage) {
-			loadImage ("background.png");				
-		}
 
 		player.setObjectManager(objectManager);
 
@@ -101,37 +97,53 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 
 	void updateGameState() {
+		//changes level when player intersects with finish line and updates objects in the object manager
 		if(objectManager.update()) {
 			currentState++;
 			topLevel = currentState;
 		}
 
+		//collision check for intersection with right side of a platform
+		for(Platform p: objectManager.platforms) {
 
-		//		for(Platform p: objectManager.platforms) {
-		//
-		//			if(player.collisionBox.intersects(p.collisionBox) && player.x > p.x+p.width-3) {
-		//				canMoveLeft = false;
-		//				break;
-		//			}
-		//			else {
-		//				canMoveLeft = true;
-		//			}
-		//
-		//		}
-		//
-		//		for(Platform p: objectManager.platforms) {
-		//
-		//			if(player.collisionBox.intersects(p.collisionBox) && player.x+player.width < p.x+3) {
-		//				canMoveRight = false;
-		//				break;
-		//			}
-		//			else {
-		//				canMoveRight = true;
-		//			}
-		//
-		//		}
+			if(player.x <= p.x + p.width - 2 && player.collisionBox.intersects(p.collisionBox) && player.x > p.x && player.y + player.height >= p.y + 3 && player.y <= p.y + p.height - 3) {
+				canMoveLeft = false;
+				player.movingLeft = false;
+				break;
+			}
+			else {
+				canMoveLeft = true;
+			}
+
+		}
+
+		//collision check for intersection with left side of a platform
+		for(Platform p: objectManager.platforms) {
+
+			if(player.x+player.width >= p.x + 2 && player.collisionBox.intersects(p.collisionBox) && player.x < p.x && player.y + player.height >= p.y + 3 && player.y <= p.y + p.height - 3) {
+
+				canMoveRight = false;
+				player.movingRight = false;
+				break;
+			}
+			else {
+				canMoveRight = true;
+			}
 
 
+		}
+
+		//collision check for intersection with bottom of a platform
+		for(Platform p: objectManager.platforms) {
+
+			if(player.y < p.y + p.height && player.collisionBox.intersects(p.collisionBox) && player.y + 5 > p.y + p.height) {
+
+				player.ySpeed = 1;
+			}
+
+		}
+
+		//checks if player is alive
 		if(player.isActive == false) {
 			currentState = END;
 		}
@@ -284,11 +296,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 				player.jump();
 			}
 
-			if(e.getKeyCode() == KeyEvent.VK_LEFT|| e.getKeyCode() == KeyEvent.VK_A) {
+			if(e.getKeyCode() == KeyEvent.VK_LEFT && canMoveLeft|| e.getKeyCode() == KeyEvent.VK_A && canMoveLeft) {
 				player.movingLeft = true;
 			}
 
-			if(e.getKeyCode() == KeyEvent.VK_RIGHT|| e.getKeyCode() == KeyEvent.VK_D) {
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT && canMoveRight|| e.getKeyCode() == KeyEvent.VK_D && canMoveRight) {
 				player.movingRight = true;
 			}
 
@@ -321,13 +333,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 
 	void addLevelOneObjects() {
+
+		loadImage ("background.png");				
 		objectManager.purgeObjects();
-
-
-		//temporary
-		objectManager.addFinishLine(new FinishLine(175,520,50,50));
-		objectManager.addPlatform(new Platform(72,505,50,50));
-
 
 
 		objectManager.addPlatform(new Platform(0,550,150,50));
@@ -354,13 +362,18 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addFinishLine(new FinishLine(850,90,120,40));
 
 		levelOneObjectsAdded = true;
+
 	}
 	void addLevelTwoObjects() {
-		objectManager.purgeObjects();
 
+		loadImage ("background2.jpeg");	
+		objectManager.purgeObjects();
+		
+		
+		objectManager.addPlatform(new Platform(0,910,100,50));
+		
 		objectManager.addSpeedPowerup(new SpeedPowerup(150,800,50,50));
 
-		objectManager.addPlatform(new Platform(0,910,100,50));
 		objectManager.addPlatform(new Platform(250,900,175,50));
 		objectManager.addSpike(new Spike(310,880,50,20));
 
@@ -378,39 +391,55 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addPlatform(new Platform(10,650,50,25));	
 		objectManager.addHighJumpPowerup(new HighJumpPowerup(20,560,30,30));
 
-		objectManager.addPlatform(new Platform(100,575,100,25));
-		objectManager.addSpike(new Spike(175,570,15,5));
+		objectManager.addPlatform(new Platform(100,550,100,25));
+		objectManager.addSpike(new Spike(175,545,15,5));
 
-		objectManager.addPlatform(new Platform(250,525,150,50));
-		objectManager.addSpike(new Spike(260,520,15,5));
-		objectManager.addSpike(new Spike(375,520,15,5));
+		objectManager.addPlatform(new Platform(250,500,150,50));
+		objectManager.addSpike(new Spike(260,495,15,5));
+		objectManager.addSpike(new Spike(375,495,15,5));
 
-		objectManager.addPlatform(new Platform(450,470,150,50));
-		objectManager.addSpike(new Spike(460,465,15,5));
-		objectManager.addSpike(new Spike(575,465,15,5));
+		objectManager.addPlatform(new Platform(450,430,150,50));
+		objectManager.addSpike(new Spike(460,425,15,5));
+		objectManager.addSpike(new Spike(575,425,15,5));
 
-		objectManager.addPlatform(new Platform(300,355,100,25));
-		objectManager.addSpike(new Spike(310,320,25,35));
+		objectManager.addPlatform(new Platform(300,330,100,40));
+		objectManager.addSpike(new Spike(310,295,25,35));
 
-		objectManager.addPlatform(new Platform(110,300,150,25));
-		objectManager.addSpike(new Spike(120,265,25,35));
-		objectManager.addSpike(new Spike(225,265,25,35));
+		objectManager.addPlatform(new Platform(110,275,150,40));
+		objectManager.addSpike(new Spike(120,240,25,35));
+		objectManager.addSpike(new Spike(225,240,25,35));
 
-		objectManager.addPlatform(new Platform(325,200,25,10));
-		objectManager.addFinishLine(new FinishLine(450,125,100,40));
+		objectManager.addPlatform(new Platform(30,180,40,25));
+		objectManager.addPlatform(new Platform(100,0,50,25));
+		objectManager.addPlatform(new Platform(150,0,50,25));
+		objectManager.addPlatform(new Platform(200,0,50,25));
+		objectManager.addPlatform(new Platform(250,0,50,25));
+		objectManager.addPlatform(new Platform(300,0,50,25));
+		objectManager.addPlatform(new Platform(350,0,50,25));
+		
+		objectManager.addPlatform(new Platform(150,100,50,25));
+		objectManager.addPlatform(new Platform(275,100,50,25));
+		objectManager.addPlatform(new Platform(400,100,50,25));
+		
+		objectManager.addFinishLine(new FinishLine(550,0,50,25));
 
 		levelTwoObjectsAdded = true;
 	}
 	void addLevelThreeObjects() {
+
+		loadImage("background3.jpeg");
 		objectManager.purgeObjects();
+
 
 		objectManager.addPlatform(new Platform(0,750,100,50));
 
-
+		
+		
 		//level three objects go here
 
+		
 
-		objectManager.addFinishLine(new FinishLine(20,20,50,15));
+		objectManager.addFinishLine(new FinishLine(400,260,50,20));
 
 		levelThreeObjectsAdded = true;
 	}
@@ -423,7 +452,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 			} catch (Exception e) {
 
 			}
-			needImage = false;
 		}
 	}
 	void resetPlayer() {
