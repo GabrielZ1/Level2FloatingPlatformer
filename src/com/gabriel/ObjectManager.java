@@ -12,6 +12,8 @@ public class ObjectManager implements ActionListener {
 	Player player;
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
 	ArrayList<Spike> spikes = new ArrayList<Spike>();
+	ArrayList<LeftFacingSpikeWall> spikeWallsL = new ArrayList<LeftFacingSpikeWall>();
+	ArrayList<RightFacingSpikeWall> spikeWallsR = new ArrayList<RightFacingSpikeWall>();
 	ArrayList<FinishLine> finishLines = new ArrayList<FinishLine>();
 	ArrayList<SpeedPowerup> speedPowerups = new ArrayList<SpeedPowerup>();
 	ArrayList<HighJumpPowerup> highJumpPowerups = new ArrayList<HighJumpPowerup>();
@@ -28,6 +30,14 @@ public class ObjectManager implements ActionListener {
 
 	public void addSpike(Spike spike) {
 		spikes.add(spike);
+	}
+	
+	public void addLeftFacingSpikeWall(LeftFacingSpikeWall spikeL) {
+		spikeWallsL.add(spikeL);
+	}
+	
+	public void addRightFacingSpikeWall(RightFacingSpikeWall spikeR) {
+		spikeWallsR.add(spikeR);
 	}
 
 	public void addFinishLine(FinishLine finishLine) {
@@ -70,6 +80,14 @@ public class ObjectManager implements ActionListener {
 			spikes.get(i).draw(g);
 		}
 
+		for(int i = 0; i<spikeWallsL.size(); i++) {
+			spikeWallsL.get(i).draw(g);
+		}
+		
+		for(int i = 0; i<spikeWallsR.size(); i++) {
+			spikeWallsR.get(i).draw(g);
+		}
+		
 		for(int i = 0; i<finishLines.size(); i++) {
 			finishLines.get(i).draw(g);
 		}
@@ -92,6 +110,8 @@ public class ObjectManager implements ActionListener {
 
 		platforms.clear();
 		spikes.clear();
+		spikeWallsL.clear();
+		spikeWallsR.clear();
 		finishLines.clear();
 		speedPowerups.clear();
 		highJumpPowerups.clear();
@@ -136,6 +156,18 @@ public class ObjectManager implements ActionListener {
 
 		for(Spike s: spikes){
 			if(player.collisionBox.intersects(s.collisionBox)){
+				player.isActive = false;
+			}
+		}
+		
+		for(LeftFacingSpikeWall sWL: spikeWallsL){
+			if(player.collisionBox.intersects(sWL.collisionBox)){
+				player.isActive = false;
+			}
+		}
+		
+		for(RightFacingSpikeWall sWR: spikeWallsR){
+			if(player.collisionBox.intersects(sWR.collisionBox)){
 				player.isActive = false;
 			}
 		}
@@ -187,6 +219,7 @@ public class ObjectManager implements ActionListener {
 		for(int i = 0; i < highJumpPowerups.size(); i++){
 			if(player.collisionBox.intersects(highJumpPowerups.get(i).collisionBox)) {
 				player.jumpPower = 15;
+				player.hasHighJump = true;
 				highJumpPowerups.remove(i);
 
 			}

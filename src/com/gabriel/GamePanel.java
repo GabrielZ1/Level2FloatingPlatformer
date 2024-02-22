@@ -306,6 +306,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		}
 
+		//secret skip level: press "0" to go to the next level (spawns finish line on top of player)
+		if(e.getKeyCode() == KeyEvent.VK_0) {
+			if(currentState == LEVELONE || currentState == LEVELTWO || currentState == LEVELTHREE) {
+				player.jump();
+				objectManager.addFinishLine(new FinishLine(player.x,player.y,player.width,player.height));
+			}
+		}
 	}
 
 	@Override
@@ -368,10 +375,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 		loadImage ("background2.jpeg");	
 		objectManager.purgeObjects();
-		
-		
-		objectManager.addPlatform(new Platform(0,910,100,50));
-		
+
+
+		objectManager.addPlatform(new Platform(0,900,100,50));
+
 		objectManager.addSpeedPowerup(new SpeedPowerup(150,800,50,50));
 
 		objectManager.addPlatform(new Platform(250,900,175,50));
@@ -416,28 +423,104 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addPlatform(new Platform(250,0,50,25));
 		objectManager.addPlatform(new Platform(300,0,50,25));
 		objectManager.addPlatform(new Platform(350,0,50,25));
-		
+
 		objectManager.addPlatform(new Platform(150,100,50,25));
 		objectManager.addPlatform(new Platform(275,100,50,25));
 		objectManager.addPlatform(new Platform(400,100,50,25));
-		
+
 		objectManager.addFinishLine(new FinishLine(550,0,50,25));
 
 		levelTwoObjectsAdded = true;
 	}
 	void addLevelThreeObjects() {
 
+		player.hasHighJump = false;
+		
 		loadImage("background3.jpeg");
 		objectManager.purgeObjects();
 
 
-		objectManager.addPlatform(new Platform(0,750,100,50));
-
+		objectManager.addPlatform(new Platform(0,750,75,50));
+		objectManager.addPlatform(new Platform(175,750,75,50));
+		objectManager.addPlatform(new Platform(350,750,75,50));
+		objectManager.addPlatform(new Platform(525,750,75,50));
+		objectManager.addPlatform(new Platform(700,750,75,50));
+		
+		objectManager.addPlatform(new Platform(0,625,90,50));
+		objectManager.addPlatform(new Platform(90,625,90,50));
+		objectManager.addPlatform(new Platform(180,625,90,50));
+		objectManager.addPlatform(new Platform(270,625,90,50));
+		objectManager.addPlatform(new Platform(360,625,90,50));
+		objectManager.addPlatform(new Platform(450,625,90,50));
+		objectManager.addPlatform(new Platform(540,625,90,50));
+		
+		objectManager.addSpike(new Spike(0,615,50,15));
+		objectManager.addSpike(new Spike(50,615,50,15));
+		objectManager.addSpike(new Spike(100,615,50,15));
+		objectManager.addSpike(new Spike(150,615,50,15));
+		objectManager.addSpike(new Spike(200,615,50,15));
+		objectManager.addSpike(new Spike(250,615,50,15));
+		objectManager.addSpike(new Spike(300,615,50,15));
+		objectManager.addSpike(new Spike(350,615,50,15));
+		objectManager.addSpike(new Spike(400,615,50,15));
+		objectManager.addSpike(new Spike(450,615,50,15));
+		objectManager.addSpike(new Spike(500,615,50,15));
+		objectManager.addSpike(new Spike(550,615,75,15));
+		
+		objectManager.addWingsPowerup(new WingsPowerup(710,690,50,40));
+		
+		objectManager.addPlatform(new Platform(625,75,30,75));
+		objectManager.addPlatform(new Platform(625,150,30,75));
+		objectManager.addPlatform(new Platform(625,225,30,75));
+		objectManager.addPlatform(new Platform(625,300,30,75));
+		objectManager.addPlatform(new Platform(625,375,30,75));
+		objectManager.addPlatform(new Platform(625,450,30,75));
+		objectManager.addPlatform(new Platform(625,525,30,75));
+		objectManager.addPlatform(new Platform(625,600,30,75));
+		
+		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(653,85,25,275));
+		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(653,360,25,275));
+		
+		objectManager.addPlatform(new Platform(770,-75,60,150));
+		objectManager.addPlatform(new Platform(770,75,30,75));
+		objectManager.addPlatform(new Platform(770,150,30,75));
+		objectManager.addPlatform(new Platform(770,225,30,75));
+		objectManager.addPlatform(new Platform(770,300,30,75));
+		objectManager.addPlatform(new Platform(770,375,30,75));
+		objectManager.addPlatform(new Platform(770,450,30,75));
+		objectManager.addPlatform(new Platform(770,525,30,75));
+		objectManager.addPlatform(new Platform(770,600,30,75));
+		
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(748,-75,25,160));
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(748,85,25,275));
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(748,360,25,275));
+		
+		objectManager.addPlatform(new Platform(725,550,45,40));
+		objectManager.addPlatform(new Platform(655,400,45,40));
+		objectManager.addPlatform(new Platform(725,250,45,40));
+		
+		objectManager.addPlatform(new Platform(0,-350,800,300));
+		
+		objectManager.addPlatform(new Platform(550,75,75,50));
+		objectManager.addPlatform(new Platform(475,75,75,50));
+		objectManager.addPlatform(new Platform(400,75,75,50));
+		objectManager.addPlatform(new Platform(325,75,75,50));
+		objectManager.addPlatform(new Platform(250,75,75,50));
+		objectManager.addPlatform(new Platform(175,75,75,50));
+		objectManager.addPlatform(new Platform(100,75,75,50));
+		
+		objectManager.addSpike(new Spike(550,60,75,15));
+		objectManager.addSpike(new Spike(480,60,75,15));
+		objectManager.addSpike(new Spike(410,60,75,15));
+		objectManager.addSpike(new Spike(280,60,75,15));
+		objectManager.addSpike(new Spike(210,60,75,15));
+		objectManager.addSpike(new Spike(140,60,75,15));
+		
 		
 		
 		//level three objects go here
 
-		
+
 
 		objectManager.addFinishLine(new FinishLine(400,260,50,20));
 
@@ -460,6 +543,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		player = new Player(0, 525, 25, 25);
 		objectManager = new ObjectManager(player);
 		player.setObjectManager(objectManager);
+		player.hasHighJump = false;
 		player.hasWings = false;
 		player.xSpeed = 6;
 		player.jumpPower = 13;

@@ -19,6 +19,7 @@ public class Player extends GameObject{
 
 	public boolean canJump = false;
 
+	public boolean hasHighJump = false;
 	public boolean hasWings = false;
 
 	public int currentJumps = 0;
@@ -69,7 +70,6 @@ public class Player extends GameObject{
 
 	public void update() {
 		//this updates the player's x-position
-
 		if(movingLeft && x > 0) {
 			x -= xSpeed;
 		}
@@ -78,15 +78,32 @@ public class Player extends GameObject{
 		}
 
 		//this updates the player's y-position
-
 		ySpeed += gravity;
 		y += ySpeed;		
 
-		//sets the terminal velocity to 15
-		if(ySpeed > 15) {
-			ySpeed = 15;
+		//sets the terminal velocity to 12 in level 1, to 6 in level 2, to 8 in level 2 with high jump powerup, and to 8 in level 3
+		if(GamePanel.currentState == GamePanel.LEVELONE) {
+			if(ySpeed > 12) {
+				ySpeed = 12;
+			}
+		}
+		else if(GamePanel.currentState == GamePanel.LEVELTWO && hasHighJump == false) {
+			if(ySpeed > 6) {
+				ySpeed = 6;
+			}
+		}
+		else if(hasHighJump) {
+			if(ySpeed > 8) {
+				ySpeed = 8;
+			}
+		}
+		else if(GamePanel.currentState == GamePanel.LEVELTHREE) {
+			if(ySpeed > 8) {
+				ySpeed = 8;
+			}
 		}
 
+		//makes sure the player does not fall past the y-limit
 		if(y >= yLimit + 1){
 			y = yLimit + 1;
 			ySpeed = 0;
@@ -103,7 +120,7 @@ public class Player extends GameObject{
 			ySpeed -= jumpPower;
 			currentJumps ++;
 		}	
-		
+
 		else if(currentJumps < 1) {
 			ySpeed -= jumpPower;
 			currentJumps ++;
