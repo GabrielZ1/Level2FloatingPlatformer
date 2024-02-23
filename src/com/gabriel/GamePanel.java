@@ -435,7 +435,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	void addLevelThreeObjects() {
 
 		player.hasHighJump = false;
-		
+
 		loadImage("background3.jpeg");
 		objectManager.purgeObjects();
 
@@ -445,7 +445,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addPlatform(new Platform(350,750,75,50));
 		objectManager.addPlatform(new Platform(525,750,75,50));
 		objectManager.addPlatform(new Platform(700,750,75,50));
-		
+
 		objectManager.addPlatform(new Platform(0,625,90,50));
 		objectManager.addPlatform(new Platform(90,625,90,50));
 		objectManager.addPlatform(new Platform(180,625,90,50));
@@ -453,7 +453,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addPlatform(new Platform(360,625,90,50));
 		objectManager.addPlatform(new Platform(450,625,90,50));
 		objectManager.addPlatform(new Platform(540,625,90,50));
-		
+
 		objectManager.addSpike(new Spike(0,615,50,15));
 		objectManager.addSpike(new Spike(50,615,50,15));
 		objectManager.addSpike(new Spike(100,615,50,15));
@@ -466,9 +466,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addSpike(new Spike(450,615,50,15));
 		objectManager.addSpike(new Spike(500,615,50,15));
 		objectManager.addSpike(new Spike(550,615,75,15));
-		
+
 		objectManager.addWingsPowerup(new WingsPowerup(710,690,50,40));
-		
+
 		objectManager.addPlatform(new Platform(625,75,30,75));
 		objectManager.addPlatform(new Platform(625,150,30,75));
 		objectManager.addPlatform(new Platform(625,225,30,75));
@@ -477,10 +477,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addPlatform(new Platform(625,450,30,75));
 		objectManager.addPlatform(new Platform(625,525,30,75));
 		objectManager.addPlatform(new Platform(625,600,30,75));
-		
+
 		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(653,85,25,275));
 		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(653,360,25,275));
-		
+
 		objectManager.addPlatform(new Platform(770,-75,60,150));
 		objectManager.addPlatform(new Platform(770,75,30,75));
 		objectManager.addPlatform(new Platform(770,150,30,75));
@@ -490,39 +490,140 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addPlatform(new Platform(770,450,30,75));
 		objectManager.addPlatform(new Platform(770,525,30,75));
 		objectManager.addPlatform(new Platform(770,600,30,75));
-		
+
 		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(748,-75,25,160));
 		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(748,85,25,275));
 		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(748,360,25,275));
-		
+
 		objectManager.addPlatform(new Platform(725,550,45,40));
 		objectManager.addPlatform(new Platform(655,400,45,40));
 		objectManager.addPlatform(new Platform(725,250,45,40));
-		
+
 		objectManager.addPlatform(new Platform(0,-350,800,300));
-		
-		objectManager.addPlatform(new Platform(550,75,75,50));
-		objectManager.addPlatform(new Platform(475,75,75,50));
-		objectManager.addPlatform(new Platform(400,75,75,50));
-		objectManager.addPlatform(new Platform(325,75,75,50));
-		objectManager.addPlatform(new Platform(250,75,75,50));
-		objectManager.addPlatform(new Platform(175,75,75,50));
-		objectManager.addPlatform(new Platform(100,75,75,50));
-		
-		objectManager.addSpike(new Spike(550,60,75,15));
-		objectManager.addSpike(new Spike(480,60,75,15));
-		objectManager.addSpike(new Spike(410,60,75,15));
-		objectManager.addSpike(new Spike(280,60,75,15));
-		objectManager.addSpike(new Spike(210,60,75,15));
-		objectManager.addSpike(new Spike(140,60,75,15));
-		
-		
-		
-		//level three objects go here
 
+		objectManager.addPlatform(new Platform(520,75,105,50));
+		objectManager.addPlatform(new Platform(415,75,105,50));
+		objectManager.addPlatform(new Platform(310,75,105,50));
+		objectManager.addPlatform(new Platform(205,75,105,50));
+		objectManager.addPlatform(new Platform(100,75,105,50));
 
+		objectManager.addSpike(new Spike(575,55,45,20));
+		objectManager.addSpike(new Spike(530,55,45,20));
+		objectManager.addSpike(new Spike(485,55,45,20));
+		objectManager.addSpike(new Spike(440,55,45,20));
+		objectManager.addSpike(new Spike(395,55,45,20));
 
-		objectManager.addFinishLine(new FinishLine(400,260,50,20));
+		objectManager.addSpike(new Spike(290,55,45,20));
+		objectManager.addSpike(new Spike(245,55,45,20));
+		objectManager.addSpike(new Spike(200,55,45,20));
+		objectManager.addSpike(new Spike(155,55,45,20));
+
+		objectManager.addPlatform(new Platform(100,125,75,50));
+		objectManager.addPlatform(new Platform(100,175,75,50));
+		objectManager.addPlatform(new Platform(100,225,75,50));
+		objectManager.addPlatform(new Platform(100,275,75,50));
+		objectManager.addPlatform(new Platform(100,325,75,50));
+		objectManager.addPlatform(new Platform(100,375,75,50));
+		objectManager.addPlatform(new Platform(100,425,75,50));
+		objectManager.addPlatform(new Platform(100,475,75,50));
+
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(73,75,30,220));
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(73,295,30,220));
+
+		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(0,75,30,220));
+		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(0,295,30,220));
+
+		objectManager.addPlatform(new Platform(100,475,75,50));
+		objectManager.addPlatform(new Platform(175,475,75,50));
+		objectManager.addPlatform(new Platform(250,475,75,50));
+		objectManager.addPlatform(new Platform(325,475,75,50));
+		objectManager.addPlatform(new Platform(400,475,75,50));
+		objectManager.addPlatform(new Platform(475,475,75,50));
+
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(105,520,110,10));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(215,520,110,10));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(325,520,110,10));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(435,520,110,10));
+
+		objectManager.addPlatform(new Platform(10,575,80,40));
+		objectManager.addPlatform(new Platform(270,575,80,40));
+		objectManager.addPlatform(new Platform(530,575,80,40));
+
+		objectManager.addPlatform(new Platform(510,445,40,30));
+		objectManager.addPlatform(new Platform(510,415,40,30));
+		objectManager.addPlatform(new Platform(510,385,40,30));
+		objectManager.addPlatform(new Platform(510,355,40,30));
+		objectManager.addPlatform(new Platform(510,325,40,30));
+		objectManager.addPlatform(new Platform(510,295,40,30));
+		objectManager.addPlatform(new Platform(510,265,40,30));
+		objectManager.addPlatform(new Platform(510,235,40,30));
+		objectManager.addPlatform(new Platform(510,205,40,30));
+		objectManager.addPlatform(new Platform(510,165,40,40));
+
+		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(550,175,10,170));
+		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(550,345,10,170));
+
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(615,175,10,170));
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(615,345,10,170));
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(615,515,10,110));
+
+		objectManager.addPlatform(new Platform(550,390,75,40));
+		objectManager.addPlatform(new Platform(550,230,75,40));
+
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(590,430,35,10));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(550,270,40,10));
+
+		objectManager.addSpike(new Spike(550,220,40,10));
+
+		objectManager.addPlatform(new Platform(460,205,50,30));
+		objectManager.addPlatform(new Platform(410,205,50,30));
+		objectManager.addPlatform(new Platform(360,205,50,30));
+		objectManager.addPlatform(new Platform(310,205,50,30));
+		objectManager.addPlatform(new Platform(275,205,35,30));
+		objectManager.addPlatform(new Platform(275,165,35,40));
+
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(615,125,10,50));
+
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(170,125,90,10));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(260,125,90,10));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(350,125,90,10));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(440,125,90,10));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(530,125,90,10));
+
+		objectManager.addSpike(new Spike(310,195,40,10));
+		objectManager.addSpike(new Spike(350,195,40,10));
+		objectManager.addSpike(new Spike(390,195,40,10));
+		objectManager.addSpike(new Spike(430,195,40,10));
+		objectManager.addSpike(new Spike(470,195,40,10));
+
+		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(170,135,35,170));
+		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(170,305,30,170));
+
+		objectManager.addPlatform(new Platform(290,235,50,30));
+		objectManager.addPlatform(new Platform(290,265,50,30));
+		objectManager.addPlatform(new Platform(290,295,50,30));
+		objectManager.addPlatform(new Platform(290,325,50,30));
+		objectManager.addPlatform(new Platform(290,355,50,30));
+
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(260,235,35,150));
+
+		objectManager.addSpike(new Spike(175,445,75,30));
+		objectManager.addSpike(new Spike(245,445,75,30));
+
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(295,382,42,25));
+
+		objectManager.addRightFacingSpikeWall(new RightFacingSpikeWall(340,235,10,150));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(340,235,85,10));
+		objectManager.addDownFacingSpikeWall(new DownFacingSpikeWall(425,235,85,10));
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(500,235,10,120));
+		objectManager.addLeftFacingSpikeWall(new LeftFacingSpikeWall(500,355,10,120));
+
+		objectManager.addPlatform(new Platform(375,435,50,40));
+		objectManager.addPlatform(new Platform(425,435,50,40));
+		objectManager.addPlatform(new Platform(400,395,50,40));
+
+		objectManager.addFinishLine(new FinishLine(400,280,50,20));
+		objectManager.addVictoryFlag(new VictoryFlag(420,260,20,20));
 
 		levelThreeObjectsAdded = true;
 	}

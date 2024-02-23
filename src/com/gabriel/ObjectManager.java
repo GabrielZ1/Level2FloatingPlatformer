@@ -14,7 +14,9 @@ public class ObjectManager implements ActionListener {
 	ArrayList<Spike> spikes = new ArrayList<Spike>();
 	ArrayList<LeftFacingSpikeWall> spikeWallsL = new ArrayList<LeftFacingSpikeWall>();
 	ArrayList<RightFacingSpikeWall> spikeWallsR = new ArrayList<RightFacingSpikeWall>();
+	ArrayList<DownFacingSpikeWall> spikeWallsD = new ArrayList<DownFacingSpikeWall>();
 	ArrayList<FinishLine> finishLines = new ArrayList<FinishLine>();
+	ArrayList<VictoryFlag> victoryFlags = new ArrayList<VictoryFlag>();
 	ArrayList<SpeedPowerup> speedPowerups = new ArrayList<SpeedPowerup>();
 	ArrayList<HighJumpPowerup> highJumpPowerups = new ArrayList<HighJumpPowerup>();
 	ArrayList<WingsPowerup> wingPowerups = new ArrayList<WingsPowerup>();
@@ -39,9 +41,17 @@ public class ObjectManager implements ActionListener {
 	public void addRightFacingSpikeWall(RightFacingSpikeWall spikeR) {
 		spikeWallsR.add(spikeR);
 	}
+	
+	public void addDownFacingSpikeWall(DownFacingSpikeWall spikeD) {
+		spikeWallsD.add(spikeD);
+	}
 
 	public void addFinishLine(FinishLine finishLine) {
 		finishLines.add(finishLine);
+	}
+	
+	public void addVictoryFlag(VictoryFlag victoryFlag) {
+		victoryFlags.add(victoryFlag);
 	}
 
 	public void addSpeedPowerup(SpeedPowerup speed) {
@@ -88,10 +98,18 @@ public class ObjectManager implements ActionListener {
 			spikeWallsR.get(i).draw(g);
 		}
 		
+		for(int i = 0; i<spikeWallsD.size(); i++) {
+			spikeWallsD.get(i).draw(g);
+		}
+		
 		for(int i = 0; i<finishLines.size(); i++) {
 			finishLines.get(i).draw(g);
 		}
 
+		for(int i = 0; i<victoryFlags.size(); i++) {
+			victoryFlags.get(i).draw(g);
+		}
+		
 		for(int i = 0; i<speedPowerups.size(); i++) {
 			speedPowerups.get(i).draw(g);
 		}
@@ -112,7 +130,9 @@ public class ObjectManager implements ActionListener {
 		spikes.clear();
 		spikeWallsL.clear();
 		spikeWallsR.clear();
+		spikeWallsD.clear();
 		finishLines.clear();
+		victoryFlags.clear();
 		speedPowerups.clear();
 		highJumpPowerups.clear();
 		wingPowerups.clear();
@@ -168,6 +188,12 @@ public class ObjectManager implements ActionListener {
 		
 		for(RightFacingSpikeWall sWR: spikeWallsR){
 			if(player.collisionBox.intersects(sWR.collisionBox)){
+				player.isActive = false;
+			}
+		}
+		
+		for(DownFacingSpikeWall sWD: spikeWallsD){
+			if(player.collisionBox.intersects(sWD.collisionBox)){
 				player.isActive = false;
 			}
 		}
