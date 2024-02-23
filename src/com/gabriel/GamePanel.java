@@ -352,23 +352,23 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		objectManager.addPlatform(new Platform(500,550,300,50));
 		objectManager.addSpike(new Spike(610,520,70,30));
 
-		objectManager.addPlatform(new Platform(850,475,125,50));
+		objectManager.addPlatform(new Platform(850,473,125,50));
 
-		objectManager.addPlatform(new Platform(700,400,100,50));
-		objectManager.addPlatform(new Platform(500,400,100,50));
-		objectManager.addPlatform(new Platform(50,400,350,50));
-		objectManager.addSpike(new Spike(270,370,70,30));
-		objectManager.addSpike(new Spike(110,370,70,30));
+		objectManager.addPlatform(new Platform(700,398,100,50));
+		objectManager.addPlatform(new Platform(500,398,100,50));
+		objectManager.addPlatform(new Platform(50,398,350,50));
+		objectManager.addSpike(new Spike(270,368,70,30));
+		objectManager.addSpike(new Spike(110,368,70,30));
 
-		objectManager.addPlatform(new Platform(-25,320,60,40));
+		objectManager.addPlatform(new Platform(-25,325,60,40));
 
-		objectManager.addPlatform(new Platform(70,240,75,40));
-		objectManager.addPlatform(new Platform(220,210,75,40));
-		objectManager.addPlatform(new Platform(370,180,75,40));
-		objectManager.addPlatform(new Platform(520,150,75,40));
-		objectManager.addPlatform(new Platform(670,120,75,40));
+		objectManager.addPlatform(new Platform(70,255,75,40));
+		objectManager.addPlatform(new Platform(220,225,75,40));
+		objectManager.addPlatform(new Platform(370,195,75,40));
+		objectManager.addPlatform(new Platform(520,165,75,40));
+		objectManager.addPlatform(new Platform(670,135,75,40));
 
-		objectManager.addFinishLine(new FinishLine(850,90,120,40));
+		objectManager.addFinishLine(new FinishLine(850,105,120,40));
 
 		levelOneObjectsAdded = true;
 
