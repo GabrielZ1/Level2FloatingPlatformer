@@ -18,6 +18,8 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
+	private static final long serialVersionUID = 1L;
+	
 	public static final int MENU = 0;
 	public static final int LEVELONE = 1;
 	public static final int LEVELTWO = 2;
