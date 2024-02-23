@@ -81,10 +81,10 @@ public class Player extends GameObject{
 		ySpeed += gravity;
 		y += ySpeed;		
 
-		//sets the terminal velocity to 12 in level 1, to 6 in level 2, to 8 in level 2 with high jump powerup, and to 8 in level 3
+		//sets the terminal velocity to 11 in level 1, to 6 in level 2, to 8 in level 2 with high jump powerup, and to 8 in level 3
 		if(GamePanel.currentState == GamePanel.LEVELONE) {
-			if(ySpeed > 12) {
-				ySpeed = 12;
+			if(ySpeed > 11) {
+				ySpeed = 11;
 			}
 		}
 		else if(GamePanel.currentState == GamePanel.LEVELTWO && hasHighJump == false) {
